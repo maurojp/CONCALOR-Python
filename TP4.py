@@ -15,35 +15,36 @@ alpha=k/(cp*d) # Difusion termica
 
 # Seteo del Entorno
 t=0 # Tiempo inicial
-L=100 # En cmts. dimension del lado de la placa
-N=200 # Cantidad de puntos (discretizacion)
+L=5 # En cmts. dimension del lado de la placa
+N=20 # Cantidad de puntos (discretizacion)
 dx=dy=L/N
-time=50
+time=20
 dt=0.5
 E=alpha*dt/dx**2 # Factor de Estabilidad
 
 # Formo la Matriz inicial con las condiciones iniciales
 P=np.zeros((N,N))
-P[1,198] = 200
-P[198,1] = 20
+P=np.pad(P, pad_width=1, mode='constant', constant_values=0)
+P[1,N] = 200
+P[N,1] = 20
+Temp=np.zeros((N+2,N+2))
  
 # Matriz de resultados
 sol=[]
-sol.append(P) #guardo situacion inicial
+sol.append(P) #guardo matriz inicial
 
 # Nucleo
 while t<time:
-    for i in range(1,199):
-        for j in range(1,199):
-            P[1,198] = 200
-            P[198,1] = 20
-            if (i==198 and j==1) or (i==1 and j==198):
-                P[1,198] = 200
-                P[198,1] = 20
-                print(P[i,j])
-            else:
-                P[i,j]=((1-E)*P[i,j])+E*((P[i-1,j]+P[i+1,j]+P[i,j-1]+P[i,j+1])/1.5)
-            sol.append(P)
+    plt.imshow(P,'hot')
+    plt.show()
+    for i in range(1,N+1):
+        for j in range(1,N+1):
+            Temp[i,j]=E*(P[i-1,j]+P[i+1,j]-2*P[i,j]+P[i,j-1]+P[i,j+1]) 
+            Temp[1,N] = 200
+            Temp[N,1] = 20
+    P=Temp
+    sol.append(P) 
+    Temp=np.zeros((N+2,N+2))       
     t+=dt
 
 plt.imshow(P,'hot')
