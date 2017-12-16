@@ -14,16 +14,17 @@ k=0.13 # Conductividad térmica
 d=7.8 # Densidad
 alpha=k/(cp*d) # Difusion termica
 
-nx = 20
-ny = 20
-nt = 50
-dx = 5/20
-dy = 5/20
-dt =.25*dx*dy/alpha
+nx = 20 # Puntos de cuadricula en x
+ny = 20 # Puntos de cuadricula en y
+nt = 50 # Numero de pasos de tiempo a calcular
+dx = 5/20 # Distancia entre puntos de cuadriculas adyacentes en x
+dy = 5/20 # Distancia entre puntos de cuadriculas adyacentes en y
+dt =.25*dx*dy/alpha # Cantidad de tiempo que abarca cada momento de tiempo
 
-u = np.zeros((ny,nx))
-un = np.zeros((ny,nx))
+u = np.zeros((ny,nx)) # Matriz solucion
+un = np.zeros((ny,nx)) # Matriz temporal
 
+### Seteo de condiciones iniciales ###
 u[0,:]=np.linspace(100,200,nx)
 u[-1,:]=np.linspace(20,100,nx)
 u[:,0]=np.linspace(100,20,ny)
@@ -37,7 +38,7 @@ fig.canvas.draw()
 plt.imshow(u,'hot')
 fig.canvas.draw()
 nu = alpha
-
+### Calculo de la solución ###
 for n in range(nt+1):
         un[:] = u[:]
         u[1:-1,1:-1]=un[1:-1,1:-1]+nu*dt/dx**2*(un[2:,1:-1]-2*un[1:-1,1:-1]+un[0:-2,1:-1])+nu*dt/dy**2*(un[1:-1,2:]-2*un[1:-1,1:-1]+un[1:-1,0:-2])
