@@ -17,19 +17,20 @@ alpha=k/(cp*d) # Difusion termica
 nx = 20 # Puntos de cuadricula en x
 ny = 20 # Puntos de cuadricula en y
 nt = 50 # Numero de pasos de tiempo a calcular
-dx = 5/20 # Distancia entre puntos de cuadriculas adyacentes en x
-dy = 5/20 # Distancia entre puntos de cuadriculas adyacentes en y
-dt =.25*dx*dy/alpha # Cantidad de tiempo que abarca cada momento de tiempo
+L = 5 # En cmts. dimension del lado de la placa
+dx = L/nx # Distancia entre puntos de cuadriculas adyacentes en x
+dy = L/ny # Distancia entre puntos de cuadriculas adyacentes en y
+C = .25 # Número de Courant
+dt =C*dx*dy/alpha # Cantidad de tiempo que abarca cada momento de tiempo
 
 u = np.zeros((ny,nx)) # Matriz solucion
 un = np.zeros((ny,nx)) # Matriz temporal
 
 ### Seteo de condiciones iniciales ###
-u[0,:]=np.linspace(100,200,nx)
-u[-1,:]=np.linspace(20,100,nx)
-u[:,0]=np.linspace(100,20,ny)
-u[:,-1]=np.linspace(200,100,ny)
-
+u[0,:]=np.linspace(0,200,nx)
+u[-1,:]=np.linspace(20,0,nx)
+u[:,0]=np.linspace(0,20,ny)
+u[:,-1]=np.linspace(200,0,ny)
 
 fig = plt.gcf()
 fig.show()
