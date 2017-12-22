@@ -11,7 +11,6 @@ import matplotlib.ticker as ticker
 import matplotlib.cm as cm
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-import seaborn as sns
 import time as tiempo
 import os
 
@@ -44,12 +43,13 @@ u[:,0]=np.linspace(110,20,ny)
 u[:,-1]=np.linspace(200,110,ny)
 
 ### Preparamos la grafica ###
-fig = plt.figure()
-fig, ax = plt.subplots(1,1,figsize=(8,8))
-heatplot = ax.imshow(u, cmap='summer')
-fig.colorbar(heatplot)
+fig = plt.gcf()
 fig.show()
+fig.canvas.draw()
 
+heatplot=plt.imshow(u,cmap='summer')
+fig.colorbar(heatplot)
+fig.canvas.draw()
 
 norm = 1 #Definimos una norma arbitraria para entrar al bucle
 start = tiempo.time()
@@ -71,9 +71,9 @@ while(norm > tolerancia):
 
         #print('\n',u)
         plt.cla()
-        ax.imshow(u, cmap='summer')
+        plt.imshow(u,cmap='summer')
         fig.canvas.draw()
-        #plt.pause(0.01)
+        plt.pause(0.001)
 
 end = tiempo.time()
 #Se imprime el tiempo total en el calculo
