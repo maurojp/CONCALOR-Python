@@ -50,7 +50,7 @@ fig = plt.gcf()
 fig.show()
 fig.canvas.draw()
 
-heatplot=plt.imshow(u,cmap='summer')
+heatplot=plt.imshow(u,cmap='nipy_spectral')
 fig.colorbar(heatplot)
 fig.canvas.draw()
 
@@ -71,9 +71,9 @@ while(norm > tolerancia):
         u[-1,:]=np.linspace(20,110,nx)
         u[:,0]=np.linspace(110,20,ny)
         u[:,-1]=np.linspace(200,110,ny)
-
+        print('\n',u)
         plt.cla()
-        plt.imshow(u,cmap='summer')
+        plt.imshow(u,cmap='nipy_spectral')
         fig.canvas.draw()
         plt.pause(0.001) #Se pausa la grafica para evitar errores en al momento de graficar
 
