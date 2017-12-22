@@ -2,7 +2,10 @@
 """
 Created on Fri Dec  1 08:51:47 2017
 
-@author: Usuario
+@author: Pacchiotti Mauro
+@author: Paletto Pablo
+@author: Bertoluzzi Matias
+
 """
 import numpy as np
 from numpy import linalg as la
@@ -23,8 +26,8 @@ alpha=k/(cp*d) # Difusion termica
 ###############################################################################
 ###############################################################################
 
-tolerancia = 0.1 * (10**-8)
-paso = 2
+tolerancia = 0.1 * (10**-8) #Definimos la tolerancia
+paso = 2 # Multiplicador de malla, tambien se utiliza para ajustar el paso de tiempo
 nx = 20*paso # Puntos de cuadricula en x
 ny = 20*paso # Puntos de cuadricula en y
 nt = 50 # Numero de pasos de tiempo a calcular
@@ -69,11 +72,10 @@ while(norm > tolerancia):
         u[:,0]=np.linspace(110,20,ny)
         u[:,-1]=np.linspace(200,110,ny)
 
-        #print('\n',u)
         plt.cla()
         plt.imshow(u,cmap='summer')
         fig.canvas.draw()
-        plt.pause(0.001)
+        plt.pause(0.001) #Se pausa la grafica para evitar errores en al momento de graficar
 
 end = tiempo.time()
 #Se imprime el tiempo total en el calculo
