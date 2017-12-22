@@ -6,17 +6,19 @@ Created on Fri Dec  1 08:51:47 2017
 """
 import numpy as np
 from numpy import linalg as la
-import matplotlib.pylab as plt
+
+import matplotlib.ticker as ticker
+import matplotlib.cm as cm
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import seaborn as sns
 import time as tiempo
 import os
 
 # Caracteristicas del material
-# cp=0.11 # Calor especifico
-# k=0.13 # Conductividad térmica
-# d=7.8 # Densidad
-cp=460
-k=52.5
-d=7850
+cp=460  # Calor especifico
+k=52.5 # Conductividad térmica
+d=7850 # Densidad
 alpha=k/(cp*d) # Difusion termica
 
 ###############################################################################
@@ -42,12 +44,13 @@ u[:,0]=np.linspace(110,20,ny)
 u[:,-1]=np.linspace(200,110,ny)
 
 ### Preparamos la grafica ###
-fig = plt.gcf()
+fig = plt.figure()
+fig, ax = plt.subplots(1,1,figsize=(8,8))
+heatplot = ax.imshow(u, cmap='summer')
+fig.colorbar(heatplot)
 fig.show()
-fig.canvas.draw()
 
-plt.imshow(u,'hot')
-fig.canvas.draw()
+
 norm = 1 #Definimos una norma arbitraria para entrar al bucle
 start = tiempo.time()
 ### Calculo de la solución ###
@@ -68,9 +71,9 @@ while(norm > tolerancia):
 
         #print('\n',u)
         plt.cla()
-        plt.imshow(u, 'hot')
+        ax.imshow(u, cmap='summer')
         fig.canvas.draw()
-        plt.pause(0.01)
+        #plt.pause(0.01)
 
 end = tiempo.time()
 #Se imprime el tiempo total en el calculo
